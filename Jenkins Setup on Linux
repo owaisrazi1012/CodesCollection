@@ -1,0 +1,21 @@
+https://www.youtube.com/watch?v=rgai3yzRsA0
+
+-------------------------------------------
+
+sestatus- it is a firwall and should be Disabled. If it's enable execute commands from below links:
+https://www.cyberciti.biz/faq/disable-selinux-on-centos-7-rhel-7-fedora-linux/
+
+systemctl stop firewalld
+
+systemctl disable firewalld
+
+-------------------------------------------
+Jenkins:
+
+https://pkg.jenkins.io/redhat-stable/
+
+Commands:
+
+3-systemctl start jenkins
+
+4-netstat -lntp | grep 6444

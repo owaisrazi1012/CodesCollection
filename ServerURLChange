@@ -1,0 +1,25 @@
+/* self.getBillerCodes= function() {
+            $.get("http://localhost:7777/public/biller-codes.json", function (data) {
+            self.BillerCodes = JSON.parse(data);
+            })
+        }*/
+        self.server_url=ko.observable();
+        //self.BillerCodes=ko.observable();
+
+        self.getBillerCodes=function(url){
+                $.get(url+"/public/biller-codes.json", function (data) {
+                    self.BillerCodes=JSON.parse(data);
+                });
+
+        }
+        if (Params.baseModel.cordovaDevice()) {
+            Platform.getInstance().then(function (platform) {
+                self.server_url(platform("getServerURL"));
+                self.getBillerCodes(self.server_url());
+            });
+        }else {
+            // self.server_url("http://localhost:7777");
+            self.server_url(window.location.protocol+"//"+window.location.host)
+            self.getBillerCodes(self.server_url());
+        }
+      //  self.getBillerCodes();

@@ -26,3 +26,5 @@ https://www.youtube.com/watch?v=TWwvxn2-J7E
 
 Id: 
 creedential as Secret text (Secret field)
+
+NOTE: Team subdomain is your workspace, integration token must be stored in credential. They've updated the plugin and remove/rename some options 

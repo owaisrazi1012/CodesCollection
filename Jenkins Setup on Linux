@@ -35,3 +35,14 @@ NOTE: Team subdomain is your workspace, integration token must be stored in cred
 sudo service jenkins restart
 sudo service jenkins stop
 sudo service jenkins start
+
+Uninstall jenkinns:
+
+Go to the certain jenkins path and execute below commands:
+1-sudo yum remove jenkins
+2-sudo rm -r /var/lib/jenkins
+
+if you are getting error in yum install command then download rpn and placed it on a path and execute below command.
+cd /data/media/
+rpm -Uvh jenkins-2.235.5-1.1.noarch.rpm
+

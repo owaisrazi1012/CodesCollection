@@ -1,0 +1,44 @@
+1- Firstly install jenkins via linux commands available on Jenkins website and follow the process available online.
+
+2- Now, since Jenkins has different plugins which allow you to connect with third party i.e Weblogic so you simply install Weblogic deployer plugin and follow the below documentation for reference.
+
+https://plugins.jenkins.io/weblogic-deployer-plugin/#documentation
+
+3. Since this plugin always deploy the EAR as application successfully on weblogic but unable to install deployment as library so we will be going to different approach.
+
+4. In order to deploy EAR as library , i have use WLST command to undeploy and deploy the EAR. Below are the command.
+
+-Undeploy:
+
+java -cp /data/middleware/wlserver/server/lib/weblogic.jar weblogic.Deployer -adminurl t3://172.20.3.195:7001 -username weblogic -password weblogic123 -name obdx.cz.app.domain -undeploy -library
+
+-Deploy:
+
+java -cp /data/middleware/wlserver/server/lib/weblogic.jar weblogic.Deployer -adminurl t3://172.20.3.195:7001 -username weblogic -password weblogic123 -deploy -library -name obdx.cz.app.domain -targets AdminServer,OBDXCLUSTER -source /data/Dev_EAR/obdx.cz.app.domain.ear
+
+Note: It can be save as .sh file and can be execute directly on putty if file shows any blank space exception than execute below command before executing above script in a file.
+
+sed -i -e 's/\r$//' earscript.sh
+
+5. Since script is ready we will directly execute these script on jenkins via SSH agent in build action and below is the code:
+
+cd /data/middleware/user_projects/domains/obdx_domain/bin
+
+./stopManagedWebLogic.sh OBDXManagedServer1
+
+sed -i -e 's/\r$//' earscript.sh
+
+./earscript.sh
+
+Note: Above command will stop the weblogic server and deploy the EAR from FTP to Weblogic.
+
+./earscript.sh
+cd /data/Dev_EAR
+#!/bin/bash
+date
+java -cp /data/middleware/wlserver/server/lib/weblogic.jar weblogic.Deployer -adminurl t3://172.20.3.195:7001 -username weblogic -password weblogic123 -name obdx.cz.app.domain -undeploy -library
+
+java -cp /data/middleware/wlserver/server/lib/weblogic.jar weblogic.Deployer -adminurl t3://172.20.3.195:7001 -username weblogic -password weblogic123 -deploy -library -name obdx.cz.app.domain -targets AdminServer,OBDXCLUSTER -source /data/Dev_EAR/obdx.cz.app.domain.ear
+
+exit 0
+ 
